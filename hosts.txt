@@ -1,0 +1,5 @@
+
+[s_servers]
+centos   ansible_host=194.87.57.31   ansible_user=<user>   ansible_password=<password>
+[deb]
+debian   ansible_host=194.87.107.68  ansible_user=<user>   ansible_password=<password>

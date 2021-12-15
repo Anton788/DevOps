@@ -1,0 +1,38 @@
+---
+- hosts: s_servers
+  become: yes
+  tasks:
+  - name: inst python
+    yum:  name=python3 state=present
+
+- hosts: deb
+  become: yes
+
+  tasks:
+  - name: inst python debian
+    apt: name=python3 state=present
+
+- hosts: all
+  become: yes
+  vars:
+       source_file: run.sh
+       python_file: res.py
+       destin_file: /home/mftiedu/exampl/run.sh
+       destin_python_file: /home/mftiedu/exampl/res.py
+  tasks:
+  - name: copy file
+    copy: src={{ source_file }}  dest={{ destin_file }} mode=0555
+    notify: Restart App
+  - name : copy python file
+    copy: src={{ python_file }}  dest={{ destin_python_file }}
+    notify: Restart App
+
+
+  - name: Start Webservers
+    service: name=nginx state=started enabled=yes
+
+
+  handlers:
+  - name: Restart App
+    service: name=nginx state=restarted
+

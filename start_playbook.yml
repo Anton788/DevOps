@@ -1,0 +1,21 @@
+---
+- name: Install nginx
+  hosts: s_servers
+  become: yes
+
+  tasks:
+  - name: inst nginx
+    yum:  name=nginx state=present
+ 
+- hosts: deb
+  become: yes
+
+  tasks:
+  - name: inst nginx debian
+    apt: name=nginx state=present
+
+- hosts: all
+  become: yes
+  tasks:
+  - name: start nginx
+    service: name=nginx state=started 
